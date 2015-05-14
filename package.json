@@ -1,0 +1,29 @@
+{
+  "name": "bloomfilter-pac",
+  "version": "1.0.0",
+  "description": "Convert GFW list to a pac file with bloomfilter",
+  "main": "index.js",
+  "scripts": {
+    "test": "node index.js && node test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/songchenwen/bloomfilter-pac.git"
+  },
+  "keywords": [
+    "pac",
+    "gfw",
+    "bloomfilter"
+  ],
+  "author": "songchenwen",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/songchenwen/bloomfilter-pac/issues"
+  },
+  "homepage": "https://github.com/songchenwen/bloomfilter-pac#readme",
+  "dependencies": {
+    "js-base64": "^2.1.8",
+    "mustache": "^2.0.0",
+    "request": "^2.55.0"
+  }
+}
