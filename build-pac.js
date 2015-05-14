@@ -1,9 +1,10 @@
 var M = require('mustache'),
+	path = require('path'),
 	fs = require('fs');
 
-var configPath = 'config.json',
-	templatePath = 'template.pac',
-	outPath = 'bloomfilter.pac';
+var configPath = path.join(__dirname, 'config.json'),
+	templatePath = path.join(__dirname, 'template.pac'),
+	outPath = path.join(__dirname, 'bloomfilter.pac');
 
 var build = function(filter) {
 	var config = prepareConfig(filter);
