@@ -39,21 +39,16 @@ var buildBloomfilterFromUrls = function(error, urls, callback){
 		return;
 	}
 
-	var elements = [];
+	var filter = bloomfilterForElementCount(Math.ceil(urls.length / 2));
 
 	for(var i = 0; i < urls.length; i ++){
 		var url = urls[i];
 		url = line2Add(url);
-		if(url && elements.indexOf(url) < 0){
-			elements.push(url);
+		if(url){
+			filter.add(url);
 		}
 	}
 
-	var filter = bloomfilterForElementCount(elements.length);
-
-	for(var i = 0; i < elements.length; i ++){
-		filter.add(elements[i]);
-	}
 	callback(null, filter);
 }
 
@@ -61,12 +56,9 @@ var bloomfilterForElementCount = function(elements){
 	var bits, hashFuncCount;
 	bits = -1 / (Math.pow(Math.log(2), 2)) * elements * Math.log(BLOOM_FILTER_FP_RATE);
 	bits = Math.ceil(bits);
-	if(bits % 32 > 0){
-		bits += (32 - bits % 32);
-	}
 	hashFuncCount = bits / elements * Math.log(2);
 	hashFuncCount = Math.ceil(hashFuncCount);
-	console.log('bloomfilter elements: ' + elements + ', bits: ' + bits + ', array: ' + bits / 32 + ', hashFuncCount: ' + hashFuncCount);
+	console.log('bloomfilter elements: ' + elements + ', bits: ' + bits + ', hashFuncCount: ' + hashFuncCount);
 	return new Bloomfilter(bits, hashFuncCount);
 }
 

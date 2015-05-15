@@ -1,6 +1,5 @@
 {
 	"proxy" : "127.0.0.1:8016",
-	"black" : [ "gist.github.com" ],
-	"white" : [ "github.io",
-			    "github.com" ]
+	"black" : [  ],
+	"white" : [  ]
 }

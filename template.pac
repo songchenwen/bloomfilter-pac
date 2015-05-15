@@ -4,7 +4,6 @@ var PAC_PROXY = 'SOCKS5 {{&proxy}}; SOCKS {{&proxy}}; PROXY {{&proxy}}; DIRECT;'
 var hashFuncCount = {{&hashFuncCount}};
 var white = {{&white}};
 var black = {{&black}};
-var bloomfilter = {{&bloomfilter}};
 
 function FindProxyForURL(url, host) {
     if (isPlainHostName(host) || host === '127.0.0.1') {
@@ -14,20 +13,20 @@ function FindProxyForURL(url, host) {
     var pos = host.lastIndexOf('.');
     var suffix = host.substring(pos + 1);
 
-    if (suffix === 'cn') {
+    if (suffix === 'cn' || suffix === 'local') {
         return PAC_DIRECT;
     }
 
-    if (suffix === 'local') {
-        return PAC_DIRECT;
+    if(black.length > 0){
+        if(isDomainBlocked(host)) {
+            return PAC_PROXY;
+        }
     }
 
-    if(isDomainBlocked(host)) {
-        return PAC_PROXY;
-    }
-
-    if (isDomainSafe(host)) {
-        return PAC_DIRECT;
+    if(white.length > 0){ 
+        if (isDomainSafe(host)) {
+            return PAC_DIRECT;
+        }
     }
 
     if (isDomainInBloomFilter(host)){
@@ -93,7 +92,7 @@ function bloomFilterTest(host) {
         b;
     while (++i < hashFuncCount) {
       b = l[i];
-      if ((bloomfilter[Math.floor(b / 32)] & (1 << (b % 32))) === 0) {
+      if (bloomfilter.charAt(b) === '0') {
         return false;
       }
     }
@@ -101,7 +100,7 @@ function bloomFilterTest(host) {
 }
 
 function bloomFilterLocations(v){
-    var m = bloomfilter.length * 32,
+    var m = bloomfilter.length,
         r = [],
         a = fnv_1a(v),
         b = fnv_1a_b(a),
@@ -155,3 +154,5 @@ function fnv_1a_b(a) {
     a += a << 5;
     return a & 0xffffffff;
 }
+
+var bloomfilter = '{{&bloomfilter}}';

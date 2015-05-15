@@ -19,8 +19,9 @@ var prepareConfig = function(filter){
 	config.hashFuncCount = filter.k;
 	config.white = JSON.stringify(config.white);
 	config.black = JSON.stringify(config.black);
-	config.bloomfilter = JSON.stringify([].slice.call(filter.buckets));
+	config.bloomfilter =[].slice.call(filter.buckets).join('');
 	return config;
 }
+
 
 module.exports = build;
