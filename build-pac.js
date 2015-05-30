@@ -15,10 +15,14 @@ var build = function(filter) {
 
 var prepareConfig = function(filter){
 	var config = JSON.parse(fs.readFileSync(configPath, 'utf8'));
+	if(config.black && config.black.length > 0){
+		for(var i = 0; i < config.black.length; i++){
+			filter.add(config.black[i]);
+		}
+	}
 
 	config.hashFuncCount = filter.k;
 	config.white = JSON.stringify(config.white);
-	config.black = JSON.stringify(config.black);
 	config.bloomfilter =[].slice.call(filter.buckets).join('');
 	return config;
 }

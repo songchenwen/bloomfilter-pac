@@ -3,7 +3,6 @@ var PAC_PROXY = 'SOCKS5 {{&proxy}}; SOCKS {{&proxy}}; PROXY {{&proxy}}; DIRECT;'
 
 var hashFuncCount = {{&hashFuncCount}};
 var white = {{&white}};
-var black = {{&black}};
 
 function FindProxyForURL(url, host) {
     if (isPlainHostName(host) || host === '127.0.0.1') {
@@ -15,12 +14,6 @@ function FindProxyForURL(url, host) {
 
     if (suffix === 'cn' || suffix === 'local') {
         return PAC_DIRECT;
-    }
-
-    if(black.length > 0){
-        if(isDomainBlocked(host)) {
-            return PAC_PROXY;
-        }
     }
 
     if(white.length > 0){ 
@@ -51,23 +44,6 @@ function isDomainSafe(target) {
     }
 
     return white.indexOf(target) >= 0;
-}
-
-function isDomainBlocked(target){
-    var pos = target.lastIndexOf('.');
-    pos = target.lastIndexOf('.', pos - 1);
-
-    while (pos > 0) {
-        suffix = target.substring(pos + 1);
-
-        if (black.indexOf(suffix) >= 0) {
-            return true;
-        }
-
-        pos = target.lastIndexOf('.', pos - 1);
-    }
-
-    return black.indexOf(target) >= 0;
 }
 
 function isDomainInBloomFilter(target){
