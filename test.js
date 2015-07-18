@@ -26,7 +26,7 @@ function testArray(array, expectedPrefix){
 		if(result.indexOf(expectedPrefix) == 0){
 			console.log(item + ' : ' + result);
 		}else{
-			throw item + ' : ' + result + ', expect prefix ' + '"' + expectedPrefix + '"'; 
+			throw (item + ' : ' + result + ', expect prefix ' + '"' + expectedPrefix + '"'); 
 		}
 	}
 }

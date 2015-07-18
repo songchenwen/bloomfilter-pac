@@ -1,5 +1,5 @@
 {
 	"proxy" : "127.0.0.1:8016",
 	"white" : [  ],
-	"black" : [ "google.co.jp", "blogspot.hk", "blogspot.com" ]
+	"black" : [ "google.co.jp", "blogspot.hk", "blogspot.com", "google.com.hk", "google.com" ]
 }
