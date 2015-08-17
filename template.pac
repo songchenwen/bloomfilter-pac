@@ -9,6 +9,15 @@ function FindProxyForURL(url, host) {
         return PAC_DIRECT;
     }
 
+    if (isIP(host)){
+        if( isInNet(host, "10.0.0.0", "255.0.0.0") ||
+            isInNet(host, "172.16.0.0",  "255.240.0.0") ||
+            isInNet(host, "192.168.0.0",  "255.255.0.0") ||
+            isInNet(host, "127.0.0.0", "255.255.255.0")){
+            return PAC_DIRECT;
+        }
+    }
+
     var pos = host.lastIndexOf('.');
     var suffix = host.substring(pos + 1);
 
@@ -44,6 +53,11 @@ function isDomainSafe(target) {
     }
 
     return white.indexOf(target) >= 0;
+}
+
+function isIP(host){
+    var isIpV4Addr = /^(\d+.){3}\d+$/;
+    return isIpV4Addr.test (host);
 }
 
 function isDomainInBloomFilter(target){
